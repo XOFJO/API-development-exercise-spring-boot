@@ -12,13 +12,14 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class CompaniesController {
     private Map<Integer, Company> companies = new HashMap<>();
+    private int nextCompanyId = 0;
 
     @PostMapping("/companies")
     @ResponseStatus(HttpStatus.CREATED)
     public void postCompany(@RequestBody Company company) {
-        int newId = companies.size() + 1;
-        company.setId(newId);
-        companies.put(newId, company);
+        company.setId(nextCompanyId);
+        companies.put(nextCompanyId, company);
+        nextCompanyId++;
     }
 
     @GetMapping("/companies")
