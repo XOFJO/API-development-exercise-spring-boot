@@ -32,4 +32,10 @@ public class CompaniesController {
         return company;
     }
 
+    @GetMapping("/companies/{id}/employees")
+    public List<Employee> getEmployeesByCompanyById(@PathVariable int id) {
+        Company company = companies.get(id);
+        List<Employee> employees = company.getEmployees();
+        return employees;
+    }
 }
