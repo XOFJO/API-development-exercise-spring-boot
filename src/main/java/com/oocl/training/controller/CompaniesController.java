@@ -38,4 +38,20 @@ public class CompaniesController {
         List<Employee> employees = company.getEmployees();
         return employees;
     }
+
+    @PutMapping("/companies/{id}")
+    public Company updateCompany(@PathVariable int id, @RequestBody Company updatedCompany) {
+        Company existingCompany = companies.get(id);
+        if (existingCompany != null) {
+            existingCompany.setName(updatedCompany.getName());
+            return existingCompany;
+        }
+        return null;
+    }
+
+    @DeleteMapping("/companies/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCompany(@PathVariable int id) {
+        companies.remove(id);
+    }
 }
