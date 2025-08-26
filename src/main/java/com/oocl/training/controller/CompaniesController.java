@@ -12,6 +12,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class CompaniesController {
     private Map<Integer, Company> companies = new HashMap<>();
+
     @PostMapping("/companies")
     @ResponseStatus(HttpStatus.CREATED)
     public void postCompany(@RequestBody Company company) {
@@ -21,8 +22,22 @@ public class CompaniesController {
     }
 
     @GetMapping("/companies")
-    public List<Company> getCompanies() {
-        return new ArrayList<>(companies.values());
+    public List<Company> getCompanies(@RequestParam(required = false) Integer page,
+                                     @RequestParam(required = false) Integer size) {
+        List<Company> allCompanies = new ArrayList<>(companies.values());
+
+        if (page != null && size != null) {
+            int startIndex = (page - 1) * size;
+            int endIndex = Math.min(startIndex + size, allCompanies.size());
+
+            if (startIndex >= allCompanies.size()) {
+                return new ArrayList<>();
+            }
+
+            return allCompanies.subList(startIndex, endIndex);
+        }
+
+        return allCompanies;
     }
 
 
