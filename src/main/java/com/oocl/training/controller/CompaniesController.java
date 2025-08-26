@@ -15,13 +15,21 @@ public class CompaniesController {
     @PostMapping("/companies")
     @ResponseStatus(HttpStatus.CREATED)
     public void postCompany(@RequestBody Company company) {
-        company.setId(companies.size() + 1);
-        companies.put(companies.size() + 1, company);
+        int newId = companies.size() + 1;
+        company.setId(newId);
+        companies.put(newId, company);
     }
 
     @GetMapping("/companies")
     public List<Company> getCompanies() {
         return new ArrayList<>(companies.values());
+    }
+
+
+    @GetMapping("/companies/{id}")
+    public Company getCompanyById(@PathVariable int id) {
+        Company company = companies.get(id);
+        return company;
     }
 
 }
