@@ -1,15 +1,11 @@
 package com.oocl.training.controller;
-import com.oocl.training.Model.Company;
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Company;
+import com.oocl.training.model.Employee;
 import com.oocl.training.service.CompanyService;
-import com.oocl.training.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController

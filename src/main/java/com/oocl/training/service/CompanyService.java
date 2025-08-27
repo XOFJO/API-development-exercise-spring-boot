@@ -1,8 +1,8 @@
 package com.oocl.training.service;
 
 import com.oocl.training.DAO.CompanyRepo;
-import com.oocl.training.Model.Company;
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Company;
+import com.oocl.training.model.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

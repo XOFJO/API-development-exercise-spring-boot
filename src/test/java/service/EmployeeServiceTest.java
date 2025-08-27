@@ -1,7 +1,7 @@
 package service;
 
 
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Employee;
 import com.oocl.training.service.EmployeeService;
 import com.oocl.training.DAO.EmployeeRepo;
 import exception.OutsideAgeRangeEmployee;

@@ -1,4 +1,4 @@
-package com.oocl.training.Model;
+package com.oocl.training.model;
 
 public class Employee {
     private int id;

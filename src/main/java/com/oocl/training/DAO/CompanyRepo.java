@@ -1,7 +1,7 @@
 package com.oocl.training.DAO;
 
-import com.oocl.training.Model.Company;
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Company;
+import com.oocl.training.model.Employee;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
