@@ -3,6 +3,7 @@ import com.oocl.training.DAO.EmployeeRepo;
 import com.oocl.training.Model.Employee;
 import exception.OutsideAgeRangeEmployee;
 import exception.Over30YearsOldSalaryLessThan20000;
+import exception.UpdateInactiveEmployee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +37,10 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(int id, Employee updatedEmployee) {
+        Employee currentEmployee = employeeRepo.findById(id);
+        if (!currentEmployee.getStatus()) {
+            throw new UpdateInactiveEmployee("Cannot update an inactive employee.");
+        }
         return employeeRepo.updateById(id, updatedEmployee);
     }
 

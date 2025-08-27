@@ -8,6 +8,9 @@ public class Employee {
     private double salary;
     private boolean status;
 
+
+
+
     public Employee(int id, String name, int age, String gender, double salary) {
         this.id = id;
         this.name = name;
