@@ -37,6 +37,25 @@ public class CompanyRepo {
         nextCompanyId++;
     }
 
+    public Company findById(int id) {
+        return companies.get(id);
+    }
 
+    public List<Employee> getAllEmployees(Company company) {
+        return company.getEmployees();
+    }
 
+    public Company updateCompany(int id, Company updatedCompany) {
+        Company existingCompany = companies.get(id);
+        if (existingCompany != null) {
+            existingCompany.setName(updatedCompany.getName());
+            existingCompany.setEmployees(updatedCompany.getEmployees());
+            companies.put(id, existingCompany);
+        }
+        return existingCompany;
+    }
+
+    public void deleteCompany(int id) {
+        companies.remove(id);
+    }
 }

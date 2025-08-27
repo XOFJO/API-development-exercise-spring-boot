@@ -9,6 +9,9 @@ public class Employee {
     private boolean status;
 
 
+    public Employee() {
+    }
+
 
 
     public Employee(int id, String name, int age, String gender, double salary) {
