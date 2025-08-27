@@ -12,7 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -71,5 +72,49 @@ public class EmployeeServiceTest {
         //when / then
         Over30YearsOldSalaryLessThan20000 exception = assertThrows(Over30YearsOldSalaryLessThan20000.class, () -> employeeService.addEmployee(employee));
         assertEquals("Employees over 30 must have a salary of at least 10000.", exception.getMessage());
+    }
 
+    @Test
+    void should_get_employee_by_id() {
+        // Given
+        int id = 1;
+        Employee mockedReturedFromDataBaseEmployee = new Employee(1, "John Doe", 22, "MALE", 3000, true);
+        Mockito.when(employeeRepo.findById(Mockito.anyInt())).thenReturn(mockedReturedFromDataBaseEmployee);
+        // When
+        Employee receivedEmployee = employeeService.getEmployeeById(id);
+
+        // Then
+        assertNotNull(receivedEmployee.getId());
+        assertEquals(mockedReturedFromDataBaseEmployee.getName(), receivedEmployee.getName());
+        assertEquals(mockedReturedFromDataBaseEmployee.getAge(), receivedEmployee.getAge());
+        assertEquals(mockedReturedFromDataBaseEmployee.getGender(), receivedEmployee.getGender());
+        assertEquals(mockedReturedFromDataBaseEmployee.getSalary(), receivedEmployee.getSalary());
+        assertEquals(mockedReturedFromDataBaseEmployee.getStatus(), receivedEmployee.getStatus());
+    }
+
+    @Test
+    void should_get_all_employees() {
+        // Given
+        List<Employee> mockedEmployees = new ArrayList<>();
+        mockedEmployees.add(new Employee(1, "John", 25, "Male", 8000, true));
+        mockedEmployees.add(new Employee(2, "Lily", 20, "Female", 8000, true));
+        mockedEmployees.add(new Employee(3, "Bob", 30, "Male", 9000, true));
+        mockedEmployees.add(new Employee(4, "Alice", 28, "Female", 10000, true));
+        Mockito.when(employeeRepo.findAll()).thenReturn(mockedEmployees);
+        // When
+        List<Employee> receivedEmployees = employeeService.getAllEmployees();
+
+        // Then
+
+        Employee receivedEmployee = mockedEmployees.get(0);
+        Employee mockedReturedFromDataBaseEmployee = mockedEmployees.get(0);
+
+        assertNotNull(receivedEmployee.getId());
+        assertEquals(mockedReturedFromDataBaseEmployee.getName(), receivedEmployee.getName());
+        assertEquals(mockedReturedFromDataBaseEmployee.getAge(), receivedEmployee.getAge());
+        assertEquals(mockedReturedFromDataBaseEmployee.getGender(), receivedEmployee.getGender());
+        assertEquals(mockedReturedFromDataBaseEmployee.getSalary(), receivedEmployee.getSalary());
+        assertEquals(mockedReturedFromDataBaseEmployee.getStatus(), receivedEmployee.getStatus());
+
+    }
 }
