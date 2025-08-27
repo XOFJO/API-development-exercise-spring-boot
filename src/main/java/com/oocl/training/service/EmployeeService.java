@@ -40,6 +40,9 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(int id) {
-        employeeRepo.deleteById(id);
+
+        Employee currentEmployee = employeeRepo.findById(id);
+        currentEmployee.setStatus(false);
+        employeeRepo.updateById(id, currentEmployee);
     }
 }
