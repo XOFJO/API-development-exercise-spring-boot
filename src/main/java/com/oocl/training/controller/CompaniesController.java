@@ -1,6 +1,8 @@
 package com.oocl.training.controller;
 import com.oocl.training.Model.Company;
 import com.oocl.training.Model.Employee;
+import com.oocl.training.service.CompanyService;
+import com.oocl.training.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/")
 public class CompaniesController {
+    private final CompanyService companyService;
+    public CompaniesController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+
     private final HashMap<Integer, Company> companies = new HashMap<>(Map.of(
             1, new Company(1, "Acme Corporation", List.of(
                     new Employee(1, "John Smith", 32, "Male", 5000.0),
@@ -32,28 +39,13 @@ public class CompaniesController {
     @PostMapping("/companies")
     @ResponseStatus(HttpStatus.CREATED)
     public void postCompany(@RequestBody Company company) {
-        company.setId(nextCompanyId);
-        companies.put(nextCompanyId, company);
-        nextCompanyId++;
+        companyService.postCompany(company);
     }
 
     @GetMapping("/companies")
     public List<Company> getCompanies(@RequestParam(required = false) Integer page,
                                      @RequestParam(required = false) Integer size) {
-        List<Company> allCompanies = new ArrayList<>(companies.values());
-
-        if (page != null && size != null) {
-            int startIndex = (page - 1) * size;
-            int endIndex = Math.min(startIndex + size, allCompanies.size());
-
-            if (startIndex >= allCompanies.size()) {
-                return new ArrayList<>();
-            }
-
-            return allCompanies.subList(startIndex, endIndex);
-        }
-
-        return allCompanies;
+        return companyService.getAllCompanies();
     }
 
 
