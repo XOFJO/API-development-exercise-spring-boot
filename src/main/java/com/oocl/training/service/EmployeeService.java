@@ -24,7 +24,7 @@ public class EmployeeService {
         if (employee.getAge() > 30 && employee.getSalary() < 20000) {
             throw new Over30YearsOldSalaryLessThan20000("Employees over 30 must have a salary of at least 10000.");
         }
-
+        employee.setStatus(true);
         return employeeRepo.save(employee);
     }
 
