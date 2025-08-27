@@ -5,6 +5,7 @@ import com.oocl.training.Model.Employee;
 import com.oocl.training.service.EmployeeService;
 import com.oocl.training.DAO.EmployeeRepo;
 import exception.OutsideAgeRangeEmployee;
+import exception.Over30YearsOldSalaryLessThan20000;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -61,4 +62,14 @@ public class EmployeeServiceTest {
         OutsideAgeRangeEmployee exception = assertThrows(OutsideAgeRangeEmployee.class, () -> employeeService.addEmployee(employee));
         assertEquals("Employee age must be between 18 and 65.", exception.getMessage());
     }
+
+    @Test
+    void should_throw_exception_when_create_employee_with_age_above_30_and_salary_less_than_20000() {
+        // Given
+        Employee employee = new Employee("John Doe", 31, "MALE", 18000, true);
+
+        //when / then
+        Over30YearsOldSalaryLessThan20000 exception = assertThrows(Over30YearsOldSalaryLessThan20000.class, () -> employeeService.addEmployee(employee));
+        assertEquals("Employees over 30 must have a salary of at least 10000.", exception.getMessage());
+
 }
