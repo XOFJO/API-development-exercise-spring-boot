@@ -1,5 +1,6 @@
 package com.oocl.training.service;
-import com.oocl.training.dao.EmployeeMemoryRepository;
+import com.oocl.training.dao.EmployeeDbRepository;
+import com.oocl.training.dao.EmployeeRepository;
 import com.oocl.training.model.Employee;
 import exception.OutsideAgeRangeEmployee;
 import exception.Over30YearsOldSalaryLessThan20000;
@@ -10,10 +11,10 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private final EmployeeMemoryRepository employeeMemoryRepository;
+    private final EmployeeRepository employeeDbRepository;
 
-    public EmployeeService(EmployeeMemoryRepository employeeMemoryRepository) {
-        this.employeeMemoryRepository = employeeMemoryRepository;
+    public EmployeeService(EmployeeDbRepository employeeDbRepository) {
+        this.employeeDbRepository = employeeDbRepository;
     }
 
     public Employee addEmployee(Employee employee) {
@@ -26,28 +27,28 @@ public class EmployeeService {
             throw new Over30YearsOldSalaryLessThan20000("Employees over 30 must have a salary of at least 10000.");
         }
         employee.setStatus(true);
-        return employeeMemoryRepository.save(employee);
+        return employeeDbRepository.save(employee);
     }
 
     public Employee getEmployeeById(int id) {
-        return employeeMemoryRepository.findById(id);
+        return employeeDbRepository.findById(id);
     }
     public List<Employee> getAllEmployees() {
-        return employeeMemoryRepository.findAll();
+        return employeeDbRepository.findAll();
     }
 
     public Employee updateEmployee(int id, Employee updatedEmployee) {
-        Employee currentEmployee = employeeMemoryRepository.findById(id);
+        Employee currentEmployee = employeeDbRepository.findById(id);
         if (!currentEmployee.getStatus()) {
             throw new UpdateInactiveEmployee("Cannot update an inactive employee.");
         }
-        return employeeMemoryRepository.updateById(id, updatedEmployee);
+        return employeeDbRepository.updateById(id, updatedEmployee);
     }
 
     public void deleteEmployee(int id) {
 
-        Employee currentEmployee = employeeMemoryRepository.findById(id);
+        Employee currentEmployee = employeeDbRepository.findById(id);
         currentEmployee.setStatus(false);
-        employeeMemoryRepository.updateById(id, currentEmployee);
+        employeeDbRepository.updateById(id, currentEmployee);
     }
 }

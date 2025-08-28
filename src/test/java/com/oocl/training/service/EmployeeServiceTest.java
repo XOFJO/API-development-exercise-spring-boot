@@ -1,8 +1,8 @@
 package com.oocl.training.service;
 
 
+import com.oocl.training.dao.EmployeeDbRepository;
 import com.oocl.training.model.Employee;
-import com.oocl.training.dao.EmployeeMemoryRepository;
 import exception.OutsideAgeRangeEmployee;
 import exception.Over30YearsOldSalaryLessThan20000;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
     @Mock
-    private EmployeeMemoryRepository employeeMemoryRepository;
+    private EmployeeDbRepository employeeDbRepository;
 
     @InjectMocks
     private EmployeeService employeeService;
@@ -29,7 +29,7 @@ public class EmployeeServiceTest {
         // Given
         Employee employee = new Employee("John Doe", 22, "MALE", 3000, true);
         Employee mockedReturedFromDataBaseEmployee = new Employee(1, "John Doe", 22, "MALE", 3000, true);
-        Mockito.when(employeeMemoryRepository.save(Mockito.any(Employee.class))).thenReturn(mockedReturedFromDataBaseEmployee);
+        Mockito.when(employeeDbRepository.save(Mockito.any(Employee.class))).thenReturn(mockedReturedFromDataBaseEmployee);
         // When
         Employee createdEmployee = employeeService.addEmployee(employee);
 
@@ -78,7 +78,7 @@ public class EmployeeServiceTest {
         // Given
         int id = 1;
         Employee mockedReturedFromDataBaseEmployee = new Employee(1, "John Doe", 22, "MALE", 3000, true);
-        Mockito.when(employeeMemoryRepository.findById(Mockito.anyInt())).thenReturn(mockedReturedFromDataBaseEmployee);
+        Mockito.when(employeeDbRepository.findById(Mockito.anyInt())).thenReturn(mockedReturedFromDataBaseEmployee);
         // When
         Employee receivedEmployee = employeeService.getEmployeeById(id);
 
@@ -99,7 +99,7 @@ public class EmployeeServiceTest {
         mockedEmployees.add(new Employee(2, "Lily", 20, "Female", 8000, true));
         mockedEmployees.add(new Employee(3, "Bob", 30, "Male", 9000, true));
         mockedEmployees.add(new Employee(4, "Alice", 28, "Female", 10000, true));
-        Mockito.when(employeeMemoryRepository.findAll()).thenReturn(mockedEmployees);
+        Mockito.when(employeeDbRepository.findAll()).thenReturn(mockedEmployees);
         // When
         List<Employee> receivedEmployees = employeeService.getAllEmployees();
 
@@ -123,9 +123,9 @@ public class EmployeeServiceTest {
         Employee updatedEmployee = new Employee("Jane Doe", 22, "Male", 4000, true);
         Employee mockedReturnedFromDataBaseEmployee = new Employee(1, "Jane Doe", 22, "Male", 4000, true);
 
-        Mockito.when(employeeMemoryRepository.findById(Mockito.anyInt())).thenReturn(mockedReturnedFromDataBaseEmployee);
+        Mockito.when(employeeDbRepository.findById(Mockito.anyInt())).thenReturn(mockedReturnedFromDataBaseEmployee);
 
-        Mockito.when(employeeMemoryRepository.updateById(Mockito.anyInt(), Mockito.any(Employee.class))).thenReturn(mockedReturnedFromDataBaseEmployee);
+        Mockito.when(employeeDbRepository.updateById(Mockito.anyInt(), Mockito.any(Employee.class))).thenReturn(mockedReturnedFromDataBaseEmployee);
 
 
         // When
@@ -149,13 +149,13 @@ public class EmployeeServiceTest {
         Employee existingEmployee = new Employee(1, "John Doe", 25, "Male", 3000, true);
         Employee expectedUpdatedEmployee = new Employee("John Doe", 25, "Male", 3000, false);
 
-        Mockito.when(employeeMemoryRepository.findById(id)).thenReturn(existingEmployee);
+        Mockito.when(employeeDbRepository.findById(id)).thenReturn(existingEmployee);
 
         // When
         employeeService.deleteEmployee(id);
 
         // Then
-        Mockito.verify(employeeMemoryRepository, Mockito.times(1)).findById(id);
-        Mockito.verify(employeeMemoryRepository, Mockito.times(1)).updateById(id, existingEmployee);
+        Mockito.verify(employeeDbRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(employeeDbRepository, Mockito.times(1)).updateById(id, existingEmployee);
     }
 }
