@@ -1,12 +1,12 @@
 package intergrationTest;
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import com.oocl.training.DAO.EmployeeRepo;
+import com.oocl.training.dao.EmployeeRepo;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -72,5 +72,6 @@ public class EmployeeTest {
         perform.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(givenEmployee.getStatus()));
 
     }
+
 
 }

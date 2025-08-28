@@ -1,4 +1,4 @@
-package com.oocl.training.DAO;
+package com.oocl.training.dao;
 
 import com.oocl.training.model.Company;
 import com.oocl.training.model.Employee;
