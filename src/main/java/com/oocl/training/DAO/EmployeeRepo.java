@@ -48,5 +48,10 @@ public class EmployeeRepo {
     public void deleteById(int id){
         employees.remove(id);
     }
+
+    public void clearAll() {
+        employees.clear();
+        nextEmployeeId = 1;
+    }
 }
 

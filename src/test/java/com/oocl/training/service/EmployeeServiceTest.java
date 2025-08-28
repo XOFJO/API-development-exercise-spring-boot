@@ -1,4 +1,4 @@
-package service;
+package com.oocl.training.service;
 
 
 import com.oocl.training.Model.Employee;
