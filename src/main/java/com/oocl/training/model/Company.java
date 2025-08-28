@@ -1,4 +1,4 @@
-package com.oocl.training.Model;
+package com.oocl.training.model;
 
 import java.util.ArrayList;
 import java.util.List;

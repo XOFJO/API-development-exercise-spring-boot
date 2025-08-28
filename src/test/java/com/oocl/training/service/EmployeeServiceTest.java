@@ -1,7 +1,7 @@
 package com.oocl.training.service;
 
 
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Employee;
 import com.oocl.training.service.EmployeeService;
 import com.oocl.training.DAO.EmployeeRepo;
 import exception.OutsideAgeRangeEmployee;
@@ -106,15 +106,57 @@ public class EmployeeServiceTest {
 
         // Then
 
-        Employee receivedEmployee = mockedEmployees.get(0);
-        Employee mockedReturedFromDataBaseEmployee = mockedEmployees.get(0);
+        Employee receivedEmployee = receivedEmployees.get(0);
+        Employee mockedReturnedFromDataBaseEmployee = mockedEmployees.get(0);
+        assertNotEquals(0, receivedEmployee.getId());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getName(), receivedEmployee.getName());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getAge(), receivedEmployee.getAge());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getGender(), receivedEmployee.getGender());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getSalary(), receivedEmployee.getSalary());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getStatus(), receivedEmployee.getStatus());
 
-        assertNotNull(receivedEmployee.getId());
-        assertEquals(mockedReturedFromDataBaseEmployee.getName(), receivedEmployee.getName());
-        assertEquals(mockedReturedFromDataBaseEmployee.getAge(), receivedEmployee.getAge());
-        assertEquals(mockedReturedFromDataBaseEmployee.getGender(), receivedEmployee.getGender());
-        assertEquals(mockedReturedFromDataBaseEmployee.getSalary(), receivedEmployee.getSalary());
-        assertEquals(mockedReturedFromDataBaseEmployee.getStatus(), receivedEmployee.getStatus());
+    }
 
+    @Test
+    void should_update_employee_successfully() {
+        // Given
+        int id = 1;
+        Employee updatedEmployee = new Employee("Jane Doe", 22, "Male", 4000, true);
+        Employee mockedReturnedFromDataBaseEmployee = new Employee(1, "Jane Doe", 22, "Male", 4000, true);
+
+        Mockito.when(employeeRepo.findById(Mockito.anyInt())).thenReturn(mockedReturnedFromDataBaseEmployee);
+
+        Mockito.when(employeeRepo.updateById(Mockito.anyInt(), Mockito.any(Employee.class))).thenReturn(mockedReturnedFromDataBaseEmployee);
+
+
+        // When
+        Employee receivedEmployee = employeeService.updateEmployee(id, updatedEmployee);
+
+        // Then
+        assertNotEquals(0, receivedEmployee.getId());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getName(), receivedEmployee.getName());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getAge(), receivedEmployee.getAge());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getGender(), receivedEmployee.getGender());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getSalary(), receivedEmployee.getSalary());
+        assertEquals(mockedReturnedFromDataBaseEmployee.getStatus(), receivedEmployee.getStatus());
+
+    }
+
+
+    @Test
+    void should_delete_employee_successfully() {
+        // Given
+        int id = 1;
+        Employee existingEmployee = new Employee(1, "John Doe", 25, "Male", 3000, true);
+        Employee expectedUpdatedEmployee = new Employee("John Doe", 25, "Male", 3000, false);
+
+        Mockito.when(employeeRepo.findById(id)).thenReturn(existingEmployee);
+
+        // When
+        employeeService.deleteEmployee(id);
+
+        // Then
+        Mockito.verify(employeeRepo, Mockito.times(1)).findById(id);
+        Mockito.verify(employeeRepo, Mockito.times(1)).updateById(id, existingEmployee);
     }
 }

@@ -1,6 +1,6 @@
 package com.oocl.training.service;
 import com.oocl.training.DAO.EmployeeRepo;
-import com.oocl.training.Model.Employee;
+import com.oocl.training.model.Employee;
 import exception.OutsideAgeRangeEmployee;
 import exception.Over30YearsOldSalaryLessThan20000;
 import exception.UpdateInactiveEmployee;
