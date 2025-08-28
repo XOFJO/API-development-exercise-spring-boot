@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CompanyRepo {
+public class CompanyMemoryRepository implements CompanyRepository {
     private final HashMap<Integer, Company> companies = new HashMap<>(Map.of(
             1, new Company(1, "Acme Corporation", List.of(
                     new Employee(1, "John Smith", 32, "Male", 5000.0),

@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Entity
+@Table(name = "company")
 
 public class Company {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private List<Employee> employees;
 
     public Company() {
     }
-
 
     public Company(int id, String name) {
         this.id = id;

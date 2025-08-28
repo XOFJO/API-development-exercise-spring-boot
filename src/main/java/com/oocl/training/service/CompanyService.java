@@ -1,6 +1,7 @@
 package com.oocl.training.service;
 
-import com.oocl.training.dao.CompanyRepo;
+import com.oocl.training.dao.CompanyMemoryRepository;
+import com.oocl.training.dao.CompanyRepository;
 import com.oocl.training.model.Company;
 import com.oocl.training.model.Employee;
 import org.springframework.stereotype.Service;
@@ -11,14 +12,15 @@ import java.util.List;
 
 @Service
 public class CompanyService {
-    private final CompanyRepo companyRepo;
+    private final CompanyRepository companyDbRepository;
 
-    public CompanyService(CompanyRepo companyRepo) {
-        this.companyRepo = companyRepo;
+
+    public CompanyService(CompanyMemoryRepository companyDbRepository) {
+        this.companyDbRepository = companyDbRepository;
     }
 
     public List<Company> getAllCompanies(Integer page, Integer size) {
-        List<Company> companies = companyRepo.findAll();
+        List<Company> companies = companyDbRepository.findAll();
         if (page != null && size != null && page > 0 && size > 0) {
             int fromIndex = (page - 1) * size;
             int toIndex = Math.min(fromIndex + size, companies.size());
@@ -33,32 +35,32 @@ public class CompanyService {
     }
 
     public void postCompany(Company company) {
-        companyRepo.save(company);
+        companyDbRepository.save(company);
 
     }
 
     public Company getCompanyById(int id) {
-        return companyRepo.findById(id);
+        return companyDbRepository.findById(id);
 
     }
 
     public List<Employee> getEmployeesByCompanyId(int id) {
-        Company company = companyRepo.findById(id);
-        return companyRepo.getAllEmployees(company);
+        Company company = companyDbRepository.findById(id);
+        return companyDbRepository.getAllEmployees(company);
     }
 
     public Company updateCompanyById(int id, Company updatedCompany) {
-        Company company = companyRepo.findById(id);
+        Company company = companyDbRepository.findById(id);
         if (company != null) {
-            company = companyRepo.updateCompany(id, updatedCompany);
+            company = companyDbRepository.updateCompany(id, updatedCompany);
         }
         return company;
     }
 
     public void deleteCompanyById(int id) {
-        Company company = companyRepo.findById(id);
+        Company company = companyDbRepository.findById(id);
         if (company != null) {
-            companyRepo.deleteCompany(id);
+            companyDbRepository.deleteCompany(id);
         }
     }
 }
