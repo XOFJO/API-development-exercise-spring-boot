@@ -10,9 +10,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/")
-public class CompaniesController {
+public class CompanyController {
     private final CompanyService companyService;
-    public CompaniesController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
 

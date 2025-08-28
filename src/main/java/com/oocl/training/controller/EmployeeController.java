@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/")
-public class EmployeesController {
+public class EmployeeController {
     private final EmployeeService employeeService;
-    public EmployeesController (EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
