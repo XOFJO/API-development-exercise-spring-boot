@@ -1,11 +1,19 @@
 package com.oocl.training.model;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int age;
     private String gender;
     private double salary;
+    private int company_Id;
     private boolean status;
 
 

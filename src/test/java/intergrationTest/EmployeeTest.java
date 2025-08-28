@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import com.oocl.training.dao.EmployeeRepo;
+import com.oocl.training.dao.EmployeeMemoryRepository;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -19,7 +19,7 @@ public class EmployeeTest {
     private MockMvc client;
 
     @Autowired
-    private EmployeeRepo employeeRepository;
+    private EmployeeMemoryRepository employeeRepository;
 
     @BeforeEach
     public void setup() {
