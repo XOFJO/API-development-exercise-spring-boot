@@ -3,6 +3,8 @@ import com.oocl.training.model.Employee;
 import com.oocl.training.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.oocl.training.controller.mapper.EmployeeMapper;
+import com.oocl.training.controller.dto.EmployeeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,26 +15,32 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/")
 public class EmployeeController {
     private final EmployeeService employeeService;
-    public EmployeeController(EmployeeService employeeService) {
+    private final EmployeeMapper employeeMapper;
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
+        this.employeeMapper = employeeMapper;
     }
 
     @PostMapping("/employees")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public EmployeeResponse addEmployee(@RequestBody Employee employee) {
+        return employeeMapper.toResponse(employeeService.addEmployee(employee));
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable int id) {
-        return employeeService.getEmployeeById(id);
+    public EmployeeResponse getEmployeeById(@PathVariable int id) {
+
+        return employeeMapper.toResponse(employeeService.getEmployeeById(id));
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees(@RequestParam(required = false) String gender,
+    public List<EmployeeResponse> getEmployees(@RequestParam(required = false) String gender,
                                       @RequestParam(required = false) Integer page,
                                       @RequestParam(required = false) Integer size) {
-        List<Employee> allEmployees = employeeService.getAllEmployees();
+        List<EmployeeResponse> allEmployees = employeeService.getAllEmployees()
+                .stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
 
         if (gender != null) {
             allEmployees = allEmployees.stream()
@@ -52,8 +60,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{id}")
-    public Employee updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
-        return employeeService.updateEmployee(id, updatedEmployee);
+    public EmployeeResponse updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
+        return employeeMapper.toResponse(employeeService.updateEmployee(id, updatedEmployee));
     }
 
     @DeleteMapping("/employees/{id}")
