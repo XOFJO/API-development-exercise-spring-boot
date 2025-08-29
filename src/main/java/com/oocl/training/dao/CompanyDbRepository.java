@@ -27,10 +27,6 @@ public class CompanyDbRepository implements CompanyRepository{
         return repository.findById(id).get();
     }
     @Override
-    public List<Employee> getAllEmployees(Company company) {
-        return company.getEmployees();
-    }
-    @Override
     public Company updateCompany(int id, Company updatedCompany) {
         if (updatedCompany.getId() != id) {
             throw new IllegalArgumentException("ID in path and request body do not match");

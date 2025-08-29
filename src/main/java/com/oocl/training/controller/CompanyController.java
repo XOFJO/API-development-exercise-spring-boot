@@ -34,10 +34,10 @@ public class CompanyController {
         return companyService.getCompanyById(id);
     }
 
-    @GetMapping("/companies/{id}/employees")
-    public List<Employee> getEmployeesByCompanyById(@PathVariable int id) {
-        return companyService.getEmployeesByCompanyId(id);
-    }
+//    @GetMapping("/companies/{id}/employees")
+//    public List<Employee> getEmployeesByCompanyById(@PathVariable int id) {
+//        return companyService.getEmployeesByCompanyId(id);
+//    }
 
     @PutMapping("/companies/{id}")
     public Company updateCompany(@PathVariable int id, @RequestBody Company updatedCompany) {

@@ -15,21 +15,14 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private List<Employee> employees;
 
     public Company() {
     }
 
+
     public Company(int id, String name) {
         this.id = id;
         this.name = name;
-        this.employees = new ArrayList<Employee>();
-    }
-
-    public Company(int id, String name, List<Employee> employees) {
-        this.id = id;
-        this.name = name;
-        this.employees = employees;
     }
 
     public int getId() {
@@ -48,19 +41,4 @@ public class Company {
         this.name = name;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    public void addEmployee(Employee employee) {
-        this.employees.add(employee);
-    }
-
-    public void removeEmployee(Employee employee) {
-        this.employees.remove(employee);
-    }
 }

@@ -11,15 +11,8 @@ import java.util.Map;
 @Repository
 public class CompanyMemoryRepository implements CompanyRepository {
     private final HashMap<Integer, Company> companies = new HashMap<>(Map.of(
-            1, new Company(1, "Acme Corporation", List.of(
-                    new Employee(1, "John Smith", 32, "Male", 5000.0),
-                    new Employee(2, "Jane Johnson", 28, "Female", 6000.0)
-            )),
-            2, new Company(2, "TechCom Solutions", List.of(
-                    new Employee(3, "David Williams", 35,"Male", 5500.0),
-                    new Employee(4, "Emily Brown", 23, "Female", 4500.0),
-                    new Employee(5, "Michael Jones", 40, "Male", 7000.0)
-            )),
+            1, new Company(1, "Acme Corporation"),
+            2, new Company(2, "TechCom Solutions"),
             3, new Company(3, "Global Innovators"),
             4, new Company(4, "Stellar Enterprises"),
             5, new Company(5, "Nexus Industries")
@@ -41,15 +34,11 @@ public class CompanyMemoryRepository implements CompanyRepository {
         return companies.get(id);
     }
 
-    public List<Employee> getAllEmployees(Company company) {
-        return company.getEmployees();
-    }
 
     public Company updateCompany(int id, Company updatedCompany) {
         Company existingCompany = companies.get(id);
         if (existingCompany != null) {
             existingCompany.setName(updatedCompany.getName());
-            existingCompany.setEmployees(updatedCompany.getEmployees());
             companies.put(id, existingCompany);
         }
         return existingCompany;

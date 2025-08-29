@@ -44,10 +44,10 @@ public class CompanyService {
 
     }
 
-    public List<Employee> getEmployeesByCompanyId(int id) {
-        Company company = companyDbRepository.findById(id);
-        return companyDbRepository.getAllEmployees(company);
-    }
+//    public List<Employee> getEmployeesByCompanyId(int id) {
+//        Company company = companyDbRepository.findById(id);
+//        return companyDbRepository.getAllEmployees(company);
+//    }
 
     public Company updateCompanyById(int id, Company updatedCompany) {
         Company company = companyDbRepository.findById(id);

@@ -15,8 +15,6 @@ public interface CompanyRepository {
 
     public Company findById(int id);
 
-    public List<Employee> getAllEmployees(Company company);
-
     public Company updateCompany(int id, Company updatedCompany);
 
     public void deleteCompany(int id);
